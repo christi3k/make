@@ -20,3 +20,8 @@
  * Add your custom styles below.
  * This version of the Make child theme is only compatible with Make 1.6.0 and above.
  */
+@font-face {
+    font-family: "Jaapokki Regular";
+    font-weight: normal;
+    src: url(font/jaapokki.woff);
+}

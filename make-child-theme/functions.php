@@ -47,6 +47,14 @@ function childtheme_style_version() {
 
 add_action( 'wp_enqueue_scripts', 'childtheme_style_version', 20 );
 
-/**
- * Add your custom theme functions here.
- */
+function enqueue_editor_assets() {
+	// Scripts.
+	wp_enqueue_script(
+		'make-gutenberg', // Handle.
+		get_stylesheet_directory_uri() . '/js/dist/hack.js',
+		array( 'wp-blocks', 'wp-editor', 'wp-i18n', 'wp-element' ),
+		TTFMAKE_VERSION
+	);
+}
+
+add_action( 'enqueue_block_editor_assets', 'enqueue_editor_assets', 10 );
