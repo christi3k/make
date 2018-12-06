@@ -51,10 +51,45 @@ function enqueue_editor_assets() {
 	// Scripts.
 	wp_enqueue_script(
 		'make-gutenberg', // Handle.
-		get_stylesheet_directory_uri() . '/js/dist/hack.js',
-		array( 'wp-blocks', 'wp-editor', 'wp-i18n', 'wp-element' ),
+		get_stylesheet_directory_uri() . '/js/gutenberg.js',
+		array( 'wp-editor', 'wp-edit-post' ),
 		TTFMAKE_VERSION
 	);
 }
 
 add_action( 'enqueue_block_editor_assets', 'enqueue_editor_assets', 10 );
+
+register_meta( 'page', 'use_make_builder', array(
+	'object_subtype' => 'page',
+	'show_in_rest' => true,
+	'single' => true,
+	'type' => 'string'
+) );
+
+//add_filter( 'use_block_editor_for_post', '__return_false' );
+
+add_action( 'wp_ajax_use_gutenberg', 'use_gutenberg' );
+
+function use_gutenberg() {
+	$post_id = $_REQUEST['post_id'];
+	update_post_meta( $post_id, '_use_gutenberg', 1 );
+
+	wp_send_json_success();
+}
+
+function my_post_filter( $use_block_editor, $post ) {
+	$use_block_editor = false;
+
+	if ( 1 == get_post_meta( $post->ID, '_use_gutenberg', true ) ) {
+		$use_block_editor = true;
+
+		if ( isset( $_GET['use-make'] ) ) {
+			update_post_meta( $post->ID, '_use_gutenberg', 0 );
+			$use_block_editor = false;
+		}
+	}
+
+	return $use_block_editor;
+}
+
+add_filter( 'use_block_editor_for_post', 'my_post_filter', 10, 2 );

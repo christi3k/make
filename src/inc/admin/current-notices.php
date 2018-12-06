@@ -86,3 +86,14 @@ if ( Make()->plus()->is_plus() && strcmp( Make()->plus()->get_plus_version(), '1
 		)
 	);
 }
+
+$this->register_admin_notice(
+	'switch-to-g',
+	sprintf( __( 'Make is not compatible with Gutenberg. We switch your screen to classic one. If you prefer to use Gutenberg for this post, <a href="#">click here</a>.', 'make' ) ),
+	array(
+		'cap'     => 'edit_page',
+		'dismiss' => false,
+		'screen'  => array( 'edit-page', 'page' ),
+		'type'    => 'warning',
+	)
+);

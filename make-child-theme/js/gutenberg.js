@@ -1,15 +1,15 @@
 ( function( $, wpData, wpEditor ) {
     $(window).load(function() {
-        var $button = $( '<button>' ).text( 'Switch to Make' );
+        var $button = $( '<button>' ).text( 'Switch to Make Builder' );
 
         $( '.edit-post-header-toolbar' ).append( $button );
+
+        $button.on( 'click', handleClick );
     });
 
-    var subscriber = wpData.subscribe( function()  {
-        var newTemplate = wpData.select('core/editor').getEditedPostAttribute('template');
+    function handleClick() {
+        wpData.dispatch('core/editor').savePost();
 
-        return newTemplate;
-    } );
-
-    console.log( subscriber );
+        window.location.href = window.location.href + '&use-make';
+    }
 })(jQuery, window.wp.data, window.wp.editor );

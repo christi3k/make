@@ -29,6 +29,7 @@
 			this.cache.$featuredImage = $('#postimagediv');
 			this.cache.$helpnotice = $('#ttfmake-notice-make-page-builder-welcome');
 			this.cache.$body = $('body');
+			this.cache.$gutenbergSwitch = $('#make-notice-switch-to-g a');
 		},
 
 		bindEvents: function() {
@@ -65,6 +66,15 @@
 			});
 
 			self.templateToggle();
+
+			self.cache.$gutenbergSwitch.on('click', function() {
+				$.post(ajaxurl, {
+					action: 'use_gutenberg',
+					post_id: $('#post_ID').val()
+				}, function (data) {
+					$('#publish').click();
+				});
+			});
 		},
 
 		templateToggle: function() {
