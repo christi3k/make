@@ -167,7 +167,7 @@ final class MAKE_Setup_Scripts extends MAKE_Util_Modules implements MAKE_Setup_S
 			'font-awesome',
 			$this->get_css_directory_uri() . '/libs/font-awesome/css/font-awesome.min.css',
 			array(),
-			'5.6.3'
+			'5.9.0'
 		);
 
 		// Google Fonts
